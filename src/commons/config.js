@@ -3,7 +3,7 @@ require('dotenv').config();
 const config = {
   app: {
     port: process.env.PORT,
-    host: process.env.NODE_ENV !== 'production' ? 'localhost' : '0.0.0.0',
+    host: process.env.HOST,
   },
   jwtToken: {
     accessToken: {
