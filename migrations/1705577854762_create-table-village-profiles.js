@@ -3,26 +3,37 @@
 exports.shorthands = undefined;
 
 exports.up = (pgm) => {
-  pgm.createTable('users', {
+  pgm.createTable('village_profiles', {
     id: {
       type: 'VARCHAR(50)',
       primaryKey: true,
     },
-    email: {
-      type: 'VARCHAR(50)',
-      unique: true,
+    nama_desa: {
+      type: 'VARCHAR(100)',
       notNull: true,
     },
-    password: {
+    alamat: {
       type: 'TEXT',
-      notNull: true,
+      notNull: false,
     },
-    nama_narahubung: {
+    provinsi: {
       type: 'VARCHAR(100)',
       notNull: false,
     },
-    nomor_telepon: {
-      type: 'VARCHAR(13)',
+    kota: {
+      type: 'VARCHAR(100)',
+      notNull: false,
+    },
+    kebutuhan: {
+      type: 'TEXT',
+      notNull: true,
+    },
+    masalah: {
+      type: 'TEXT',
+      notNull: true,
+    },
+    sda: {
+      type: 'TEXT',
       notNull: false,
     },
     created_at: {
@@ -39,5 +50,5 @@ exports.up = (pgm) => {
 };
 
 exports.down = (pgm) => {
-  pgm.dropTable('users');
+  pgm.dropTable('village_profiles');
 };

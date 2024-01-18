@@ -11,25 +11,24 @@ class UsersService {
   }
 
   async addUser({
-    email, password, namaDesa, alamatDesa, provinsi, kotaKabupaten, namaNarahubung, nomorTelepon,
+    email, password, namaNarahubung, nomorTelepon,
   }) {
     await this.verifyNewEmail(email);
 
     const id = `user-${nanoid(16)}`;
     const hashedPassword = await bcrypt.hash(password, 10);
+    const createdAt = new Date().toISOString();
 
     const query = {
-      text: 'INSERT INTO users VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
+      text: 'INSERT INTO users VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id',
       values: [
         id,
         email,
         hashedPassword,
-        namaDesa,
-        alamatDesa,
-        provinsi,
-        kotaKabupaten,
         namaNarahubung,
         nomorTelepon,
+        createdAt,
+        createdAt,
       ],
     };
 

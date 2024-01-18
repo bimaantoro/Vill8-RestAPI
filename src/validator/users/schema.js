@@ -3,12 +3,9 @@ const Joi = require('joi');
 const UserPayloadSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required(),
-  namaDesa: Joi.string(),
-  alamatDesa: Joi.string(),
-  provinsi: Joi.string(),
-  kotaKabupaten: Joi.string(),
-  namaNarahubung: Joi.string(),
-  nomorTelepon: Joi.number().integer().min(12),
+  namaNarahubung: Joi.string().required(),
+  nomorTelepon: Joi.number().integer().min(12)
+    .required(),
 });
 
-module.exports = { UserPayloadSchema };
+module.exports = UserPayloadSchema;

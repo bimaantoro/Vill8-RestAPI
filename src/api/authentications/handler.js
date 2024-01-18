@@ -7,22 +7,22 @@ class AuthenticationsHandler {
   }
 
   async postAuthenticationHandler(request, h) {
-    this._validator.validatePostAuthenticationPayload(request.payload);
+    this._validator.validatePostAuthPayload(request.payload);
 
     const { email, password } = request.payload;
-    const id = await this._usersService.verifyUserCredential(email, password);
+    const userId = await this._usersService.verifyUserCredential(email, password);
 
-    const accessToken = this._tokenManager.generateAccessToken({ id });
-    const refreshToken = this._tokenManager.generateRefreshToken({ id });
+    const token = this._tokenManager.generateAccessToken({ userId });
+    const refreshToken = this._tokenManager.generateRefreshToken({ userId });
 
     await this._authenticationsService.addRefreshToken(refreshToken);
 
     const response = h.response({
       status: 'success',
       message: 'Authentication berhasil ditambahkan',
-      data: {
-        accessToken,
-        refreshToken,
+      loginResult: {
+        userId,
+        token,
       },
     });
     response.code(201);
@@ -30,7 +30,7 @@ class AuthenticationsHandler {
   }
 
   async putAuthenticationHandler(request) {
-    this._validator.validatePutAuthenticationPayload(request.payload);
+    this._validator.validatePutAuthPayload(request.payload);
 
     const { refreshToken } = request.payload;
     await this._authenticationsService.verifyRefreshToken(refreshToken);
@@ -47,7 +47,7 @@ class AuthenticationsHandler {
   }
 
   async deleteAuthenticationHandler(request) {
-    this._validator.validateDeleteAuthenticationPayload(request.payload);
+    this._validator.validateDeleteAuthPayload(request.payload);
 
     const { refreshToken } = request.payload;
     await this._authenticationsService.verifyRefreshToken(refreshToken);
